@@ -1,7 +1,6 @@
 package sid.practice.stack;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
@@ -12,10 +11,9 @@ public class MaximumElement {
 
 		Scanner sc = new Scanner(System.in);
 		int numOfQueries = sc.nextInt();
-		Stack<Integer> stack = new Stack<Integer>();
+		Stack<Integer> generalStack = new Stack<Integer>();
+		Stack<Integer> maxStack = new Stack<Integer>();
 		List<Integer> maxElementList = new ArrayList<Integer>();
-		int lastTopElement = 0;
-		int lastMaxElement = 0;
 
 		for (int i = 0; i < numOfQueries; i++) {
 			int type = sc.nextInt();
@@ -23,31 +21,28 @@ public class MaximumElement {
 			switch (type) {
 
 			case 1:
-				int toBePushed = sc.nextInt();
-				stack.push(toBePushed);
+				int element = sc.nextInt();
+				generalStack.push(element);
+				if (maxStack.isEmpty()) {
+					maxStack.push(element);
+				} else if (element > maxStack.peek()) {
+					maxStack.push(element);
+				}
 				break;
 			case 2:
-				if (!stack.isEmpty())
-					stack.pop();
+				if (!generalStack.isEmpty()) {
+					int poppedElement = generalStack.pop();
+					if (!maxStack.isEmpty() && poppedElement == maxStack.peek()) {
+						maxStack.pop();
+					}
+				}
 				break;
 			case 3:
-				int maxElement = 0;
-				int currentTopElement = stack.peek();
-				if (currentTopElement != lastTopElement) {
-					for (int element : stack) {
-						if (element > maxElement) {
-							maxElement = element;
-						}
-					}
-					maxElementList.add(maxElement);
-					lastTopElement = currentTopElement;
-					lastMaxElement = maxElement;
-				} else {
-					maxElementList.add(lastMaxElement);
-				}
+				maxElementList.add(maxStack.peek());
 				break;
 			}
 		}
+		
 		for (int max : maxElementList) {
 			System.out.println(max);
 		}
