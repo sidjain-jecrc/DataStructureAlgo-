@@ -79,13 +79,11 @@ public class LinkedListMain {
 
 		Node newNode = new Node();
 		newNode.data = data;		
-		if (head == null) {
-			head = newNode;
-		} else {
-			Node firstNode = head;
-			head = newNode;
+		if (head != null) {
+			Node firstNode = head;			
 			newNode.next = firstNode;
 		}
+		head = newNode;
 		return head;
 	}
 
@@ -98,7 +96,7 @@ public class LinkedListMain {
 		if (head != null) {
 			Node current = head;
 			while (current.next != null) {
-				System.out.println(current.data);
+				System.out.print(current.data + " ");
 				current = current.next;
 			}
 			System.out.println(current.data);
