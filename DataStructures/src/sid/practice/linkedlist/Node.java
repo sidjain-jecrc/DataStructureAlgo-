@@ -2,7 +2,14 @@ package sid.practice.linkedlist;
 
 public class Node {
 
-	protected int data;
-	protected Node next;
+	public int data;
+	public Node next;
+	
+	public Node(int data) {
+		super();
+		this.data = data;
+	}
+	
+	
 
 }

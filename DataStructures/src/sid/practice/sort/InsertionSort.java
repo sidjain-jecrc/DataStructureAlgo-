@@ -2,11 +2,10 @@ package sid.practice.sort;
 
 import java.util.Scanner;
 
-
 /**
  * @author Siddharth Jain
  * 
- * Insertion Sort Algorithm Challenge from Hackerrank.com
+ *         Insertion Sort Algorithm Challenge from Hackerrank.com
  *
  */
 public class InsertionSort {
@@ -18,80 +17,28 @@ public class InsertionSort {
 		int[] integerArray = new int[arraySize];
 
 		for (int i = 0; i < arraySize; i++) {
-           integerArray[i] = sc.nextInt();
-		}		
-		insertionSort2(integerArray);
+			integerArray[i] = sc.nextInt();
+		}
+		insertionSort(integerArray);
+		printArray(integerArray);
 	}
 
-	public static void insertIntoSortedArray(int[] arr) {
+	public static void insertionSort(int[] array) {
 
-		int numToInsert = arr[arr.length - 1];
-		boolean isNumInserted = false;
-		for (int i = arr.length - 2; i >= -1; i--) {
-			if (i != -1) {
-				if (arr[i] > numToInsert) {
-					arr[i + 1] = arr[i];
+		int numOfComparisons = 0;
+		int length = array.length;
+		for (int i = 1; i < length; i++) {
+			int key = array[i];
+			int insertPosition = i;
 
-				} else {
-					arr[i + 1] = numToInsert;
-					isNumInserted = true;
-				}
-			} else {
-				arr[i + 1] = numToInsert;
-				isNumInserted = true;
+			while (insertPosition > 0 && array[insertPosition - 1] > key) {
+				array[insertPosition] = array[insertPosition - 1];
+				numOfComparisons++;
+				insertPosition--;
 			}
-			printArray(arr);
-			if (isNumInserted)
-				break;
+			array[insertPosition] = key;
 		}
-
-	}
-
-	public static void insertionSort(int[] arr) {
-
-		int numOfShifts = 0;
-		for (int i = 1; i < arr.length; i++) {
-
-			int key = arr[i];
-			boolean isKeyInserted = false;
-
-			for (int j = i - 1; j >= -1; j--) {
-				if (j != -1) {
-					if (arr[j] > key) {
-						arr[j + 1] = arr[j];
-						numOfShifts++;
-
-					} else {
-						arr[j + 1] = key;
-						isKeyInserted = true;
-					}
-				} else {
-					arr[j + 1] = key;
-					isKeyInserted = true;
-				}
-				if (isKeyInserted)
-					break;
-			}
-			printArray(arr);
-		}
-		System.out.println("Shifts: " + numOfShifts);
-	}
-
-	public static void insertionSort2(int[] A) {
-
-		int numOfShifts = 0;
-		for (int i = 1; i < A.length; i++) {
-			int value = A[i];
-			int j = i - 1;
-
-			while (j >= 0 && A[j] > value) {
-				A[j + 1] = A[j];
-				numOfShifts++;
-				j = j - 1;
-			}
-			A[j + 1] = value;
-		}
-		System.out.println("Shifts: " + numOfShifts);
+		System.out.println("Number of shifts: " + numOfComparisons);
 	}
 
 	public static void printArray(int[] arr) {

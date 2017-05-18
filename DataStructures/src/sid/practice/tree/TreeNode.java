@@ -12,5 +12,4 @@ public class TreeNode {
 		left = right = null;
 	}
 	
-	
 }
