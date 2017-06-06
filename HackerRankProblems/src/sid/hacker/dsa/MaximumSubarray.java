@@ -44,16 +44,41 @@ public class MaximumSubarray {
 					endIndex = j;
 				}
 			}
-			for (int k = startIndex; k <= endIndex; k++) {
-				contiguousSum += integerArray[k];
+
+			if (startIndex >= 0 && endIndex >= 0) {
+
+				for (int k = startIndex; k <= endIndex; k++) {
+					contiguousSum += integerArray[k];
+				}
+				resultArray[i] = String.valueOf(contiguousSum + " " + nonContiguousSum);
+
+			} else {
+				resultArray[i] = maxSubArray(integerArray, arraySize);
 			}
-			resultArray[i] = String.valueOf(contiguousSum + " " + nonContiguousSum);
 		}
 
 		for (int m = 0; m < resultArray.length; m++) {
 			System.out.println(resultArray[m]);
 		}
-
 	}
 
+	public static String maxSubArray(int[] arr, int arraySize) {
+
+		int maxSoFar = arr[0];
+		int currentMax = arr[0];
+		int nonContiguousSum = 0;
+
+		for (int i = 1; i < arraySize; i++) {
+
+			currentMax = Math.max(arr[i], currentMax + arr[i]);
+			maxSoFar = Math.max(currentMax, maxSoFar);
+
+			if (arr[i] > 0)
+				nonContiguousSum += arr[i];
+
+			if (maxSoFar < 0)
+				nonContiguousSum = maxSoFar;
+		}
+		return maxSoFar + " " + nonContiguousSum;
+	}
 }
