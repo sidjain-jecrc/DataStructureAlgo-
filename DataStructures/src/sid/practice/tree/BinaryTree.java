@@ -1,7 +1,11 @@
 package sid.practice.tree;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import sid.practice.linkedlist.Node;
 
@@ -32,19 +36,23 @@ public class BinaryTree {
 	public static void main(String[] args) {
 
 		BinaryTree tree = new BinaryTree();
-		tree.root = new TreeNode(7);
-		tree.root.left = new TreeNode(4);
-		tree.root.right = new TreeNode(9);
-		tree.root.left.left = new TreeNode(1);
-		tree.root.left.right = new TreeNode(6);
-		tree.root.right.left = new TreeNode(2);
-		tree.root.right.right = new TreeNode(5);
+		tree.root = new TreeNode(1);
+		tree.root.left = new TreeNode(2);
+		tree.root.right = new TreeNode(3);
+		tree.root.left.left = new TreeNode(4);
+		tree.root.left.right = new TreeNode(5);
+		tree.root.right.left = new TreeNode(6);
+		tree.root.right.right = new TreeNode(7);
+		tree.root.right.left.right = new TreeNode(8);
+		tree.root.right.right.right = new TreeNode(9);
 
-		System.out.println("\nLevel Order Traversal");
-		levelOrderTraversal2(tree.root);
-
-		System.out.println("\nSame Depth Traversal");
-		listNodesAtSameDepth(tree.root, 1);
+		printVerticalOrder(tree.root);
+		
+		// System.out.println("\nLevel Order Traversal");
+		// levelOrderTraversal2(tree.root);
+		//
+		// System.out.println("\nSame Depth Traversal");
+		// listNodesAtSameDepth(tree.root, 1);
 
 		// System.out.print("\nIs the Given Tree a BST: " +
 		// isBinarySearchTree(tree.root));
@@ -276,4 +284,39 @@ public class BinaryTree {
 		return root;
 	}
 
+	public static void getVerticalOrder(TreeNode root, int horDistance, Map<Integer, ArrayList<Integer>> map) {
+
+		if (root == null)
+			return;
+
+		if (map.get(horDistance) != null) {
+			ArrayList<Integer> temp = map.get(horDistance);
+			temp.add(root.data);
+			map.put(horDistance, temp);
+		} else {
+			ArrayList<Integer> newList = new ArrayList<Integer>();
+			newList.add(root.data);
+			map.put(horDistance, newList);
+		}
+
+		getVerticalOrder(root.left, horDistance - 1, map);
+		getVerticalOrder(root.right, horDistance + 1, map);
+	}
+
+	public static void printVerticalOrder(TreeNode root) {
+
+		Map<Integer, ArrayList<Integer>> map = new HashMap<>();
+		int horDist = 0;
+
+		getVerticalOrder(root, horDist, map);
+
+		Set<Integer> keys = map.keySet();
+		for (int key : keys) {
+			ArrayList<Integer> levelList = map.get(key);
+			for (int val : levelList) {
+				System.out.print(val + " ");
+			}
+			System.out.println();
+		}
+	}
 }
